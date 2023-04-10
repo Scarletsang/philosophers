@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "time.h": "c",
+        "parser.h": "c",
+        "philosophers.h": "c",
+        "simulation.h": "c",
+        "simulation_settings.h": "c",
+        "philosopher.h": "c"
+    }
+}

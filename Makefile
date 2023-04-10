@@ -5,7 +5,8 @@
 NAME:=philo
 
 CC:=cc
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror -pthread
+LDFLAGS= -pthread
 ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
 	LDFLAGS+= -g3 -fsanitize=address
@@ -27,7 +28,7 @@ ${NAME}: ${OBJS}
 	@${CC} ${PRINTF} ${OBJS} -o ${NAME} ${LDFLAGS} && echo "Compilation of ${NAME} successful"
 
 %.o: %.c
-	@${CC} ${CFLAGS} ${addprefix -I ,${INCLUDE}} -c $< -o $@
+	@${CC} ${CFLAGS} ${addprefix -iquote ,${INCLUDE}} -c $< -o $@
 
 bonus: re
 
