@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:07:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/10 22:56:14 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/04/12 00:33:47 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "PHILOSOPHERS/time.h"
 # include "PHILOSOPHERS/simulation.h"
-# include "PHILOSOPHERS/simulation_settings.h"
+# include "PHILOSOPHERS/simulation/simulation_settings.h"
 # include <pthread.h>
 
 struct s_philosopher
@@ -25,13 +25,14 @@ struct s_philosopher
 	t_milliseconds						last_meal_time;
 	const pthread_mutex_t				*left_fork;
 	const pthread_mutex_t				*right_fork;
-	const t_milliseconds				*start_time;
-	const pthread_mutex_t				*is_printing;
+	struct s_simulation_states			*simulation_states;
 	const struct s_simulation_settings	*simulation_settings;
 };
 
-t_simulation_status	simulation_spawn_philosopher(\
-const struct s_simulation *simulation, \
-const struct s_simulation_settings *settings, unsigned int philosopher_id);
+void	philosopher_init(struct s_philosopher *philosopher, \
+struct s_simulation *simulation, const struct s_simulation_settings *settings, \
+unsigned int philosopher_id);
+
+void	*philosopher_routine(struct s_philosopher *philosopher);
 
 #endif

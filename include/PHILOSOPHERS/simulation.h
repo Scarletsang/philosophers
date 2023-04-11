@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 20:20:19 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/10 22:57:43 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/04/11 23:27:00 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 # define SIMULATION_H
 
 # include "PHILOSOPHERS/time.h"
+# include "PHILOSOPHERS/simulation/simulation_states.h"
 # include <pthread.h>
-
-typedef enum e_simulation_status
-{
-	SIMULATION_SUCCESS,
-	SIMULATION_FAILURE
-}				t_simulation_status;
+# include <stdlib.h>
 
 struct s_simulation
 {
-	pthread_t		*philosophers;
-	pthread_mutex_t	*forks;
-	t_milliseconds	start_time;
-	pthread_mutex_t	is_printing;
+	pthread_t					*philosophers;
+	pthread_mutex_t				*forks;
+	struct s_simulation_states	states;
 };
 
-t_simulation_status	simulation_create(struct s_simulation *simulation, \
+///////////////////////////////////////////
+/////////      simulation      ////////////
+///////////////////////////////////////////
+
+t_simulation_status	simulation_init(struct s_simulation *simulation, \
 unsigned int amount_of_philosophers);
 
-void				simulation_wait_for_philosophers(\
+t_simulation_status	simulation_wait_for_philosophers(\
 const struct s_simulation *simulation, unsigned int amount_of_philosophers);
 
-void				simulation_destroy(\
-const struct s_simulation *simulation, unsigned int amount_of_philosophers);
+t_simulation_status	simulation_terminate(const struct s_simulation *simulation, \
+unsigned int amount_of_philosophers);
 
 #endif

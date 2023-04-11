@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation_settings.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/10 22:57:15 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/04/11 23:22:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ struct	s_simulation_settings
 };
 
 t_parser_exit_code	simulation_settings_init(\
-struct s_simulation_settings *settings, int argc, char **argv);
+struct s_simulation_settings *settings, int argc, const char **argv);
 
 #endif

@@ -12,9 +12,16 @@ ifdef FSANITIZE
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 
+SIMULATION_SRC:= \
+	simulation/philosopher.c \
+	simulation/simulation.c \
+	simulation/simulation_settings.c \
+	simulation/simulation_states.c
 SRC:= \
+	time.c \
+	simulation_launcher.c \
 	main.c
-OBJS:=${addprefix src/,${SRC:.c=.o}}
+OBJS:=${addprefix src/,${SRC:.c=.o} ${SIMULATION_SRC:.c=.o}}
 INCLUDE:= \
 	include
 
@@ -22,10 +29,11 @@ INCLUDE:= \
 ######     Main rules     #######
 #################################
 
-all: ${NAME}
+all:
+	@${MAKE} ${NAME} -j
 
 ${NAME}: ${OBJS}
-	@${CC} ${PRINTF} ${OBJS} -o ${NAME} ${LDFLAGS} && echo "Compilation of ${NAME} successful"
+	@${CC} ${OBJS} -o ${NAME} ${LDFLAGS} && echo "Compilation of ${NAME} successful"
 
 %.o: %.c
 	@${CC} ${CFLAGS} ${addprefix -iquote ,${INCLUDE}} -c $< -o $@

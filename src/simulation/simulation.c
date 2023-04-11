@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 20:50:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/10 22:55:05 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/04/12 00:40:48 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PHILOSOPHERS/simulation.h"
 
-static t_simulation_status	simulation_mutexes_create(\
+static t_simulation_status	simulation_forks_create(\
 struct s_simulation *simulation, unsigned int amount_of_philosophers)
 {
 	unsigned int	i;
@@ -22,20 +22,15 @@ struct s_simulation *simulation, unsigned int amount_of_philosophers)
 	{
 		if (pthread_mutex_init(&simulation->forks[i], NULL))
 		{
-			simulation_destroy(simulation, i);
+			simulation_terminate(simulation, i);
 			return (SIMULATION_FAILURE);
 		}
 		i++;
 	}
-	if (pthread_mutex_init(&simulation->is_printing, NULL))
-	{
-		simulation_destroy(simulation, i);
-		return (SIMULATION_FAILURE);
-	}
 	return (SIMULATION_SUCCESS);
 }
 
-t_simulation_status	simulation_create(struct s_simulation *simulation, \
+t_simulation_status	simulation_init(struct s_simulation *simulation, \
 unsigned int amount_of_philosophers)
 {
 	simulation->philosophers = \
@@ -49,33 +44,48 @@ unsigned int amount_of_philosophers)
 		free(simulation->philosophers);
 		return (SIMULATION_FAILURE);
 	}
-	if (simulation_mutexes_create(simulation, amount_of_philosophers))
+	if (simulation_forks_create(simulation, amount_of_philosophers))
+		return (SIMULATION_FAILURE);
+	if (simulation_states_init(&simulation->states))
 	{
+		simulation_terminate(simulation, amount_of_philosophers);
 		return (SIMULATION_FAILURE);
 	}
-	simulation->start_time = time_get_current();
 	return (SIMULATION_SUCCESS);
 }
 
-void	simulation_wait_for_philosophers(\
+t_simulation_status	simulation_wait_for_philosophers(\
 const struct s_simulation *simulation, unsigned int amount_of_philosophers)
 {
-	unsigned int	i;
+	unsigned int		i;
+	t_simulation_status	status;
 
 	i = 0;
+	status = SIMULATION_SUCCESS;
 	while (i < amount_of_philosophers)
-		pthread_join(&simulation->philosophers[i++], NULL);
+	{
+		if (pthread_join(simulation->philosophers[i++], NULL))
+			status = SIMULATION_FAILURE;
+	}
+	return (status);
 }
 
-void	simulation_destroy(const struct s_simulation *simulation, \
+t_simulation_status	simulation_terminate(const struct s_simulation *simulation, \
 unsigned int amount_of_philosophers)
 {
-	unsigned int	i;
+	unsigned int		i;
+	t_simulation_status	status;
 
 	i = 0;
+	status = SIMULATION_SUCCESS;
 	while (i < amount_of_philosophers)
-		pthread_mutex_destroy(&simulation->forks[i++]);
-	pthread_mutex_destroy(&simulation->is_printing);
+	{
+		if (pthread_mutex_destroy(&simulation->forks[i++]))
+			status = SIMULATION_FAILURE;
+	}
+	if (simulation_states_free(&simulation->states))
+		status = SIMULATION_FAILURE;
 	free(simulation->philosophers);
 	free(simulation->forks);
+	return (status);
 }

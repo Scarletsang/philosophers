@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:56:38 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/10 22:51:28 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/04/11 23:21:21 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ t_milliseconds	time_get_current(void)
 
 t_milliseconds	time_get_since_simulation(t_milliseconds start_time)
 {
-	return (current_time_in_ms_get() - start_time);
+	return (time_get_current() - start_time);
 }
