@@ -14,14 +14,20 @@ endif
 
 SIMULATION_SRC:= \
 	simulation/philosopher.c \
+	simulation/philosophe_action.c \
 	simulation/simulation.c \
 	simulation/simulation_settings.c \
+	simulation/simulation_signal.c \
 	simulation/simulation_states.c
+PHILOSOPHER_SRC:= \
+	philosopher/philosopher.c \
+	philosopher/philosopher_action.c \
+	philosopher/printer.c
 SRC:= \
 	time.c \
 	simulation_launcher.c \
 	main.c
-OBJS:=${addprefix src/,${SRC:.c=.o} ${SIMULATION_SRC:.c=.o}}
+OBJS:=${addprefix src/,${SRC:.c=.o} ${PHILOSOPHER_SRC:.c=.o} ${SIMULATION_SRC:.c=.o}}
 INCLUDE:= \
 	include
 

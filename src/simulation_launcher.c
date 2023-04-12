@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 21:05:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/12 00:32:45 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/12 16:40:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ const struct s_simulation_settings *settings)
 	t_philosophers_amount	philosopher_id;
 
 	philosopher_id = 1;
-	pthread_mutex_lock(&simulation->states.start_signal.mutex);
+	simulation_signal_wait(&simulation->states.start_signal);
 	while (philosopher_id <= settings->amount_of_philosophers)
 	{
 		if (simulation_spawn_philosopher(simulation, settings, \
 			philosopher_id))
 		{
-			simulation->states.start_time = time_get_current();
+			simulation->states.start_time = time_current_get();
 			simulation_signal_send(&simulation->states.start_signal, \
 				SIMULATION_FAILURE);
 			return (philosopher_id);
 		}
 		philosopher_id++;
 	}
-	simulation->states.start_time = time_get_current();
+	simulation->states.start_time = time_current_get();
 	simulation_signal_send(&simulation->states.start_signal, \
 		SIMULATION_SUCCESS);
 	return (philosopher_id);

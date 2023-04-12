@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:15:36 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/12 00:46:43 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/12 16:17:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ const struct s_simulation_states *states);
 //////////////////////////////////////////////////
 /////////      simulation signal      ////////////
 //////////////////////////////////////////////////
+
+t_simulation_status	simulation_signal_init(\
+struct s_simulation_signal *signal);
+
+t_simulation_status	simulation_signal_wait(\
+struct s_simulation_signal *signal);
 
 t_simulation_status	simulation_signal_send(\
 struct s_simulation_signal *signal, t_simulation_status status);

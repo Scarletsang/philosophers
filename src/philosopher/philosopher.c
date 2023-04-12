@@ -6,11 +6,11 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:08:26 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/12 00:51:29 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/12 23:06:55 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PHILOSOPHERS/simulation/philosopher.h"
+#include "PHILOSOPHERS/philosopher.h"
 #include <stdio.h>
 
 void	philosopher_init(struct s_philosopher *philosopher, \
@@ -19,7 +19,7 @@ unsigned int philosopher_id)
 {
 	*(unsigned int *) &philosopher->id = philosopher_id;
 	philosopher->meals_eaten = 0;
-	philosopher->last_meal_time = time_get_current();
+	philosopher->last_meal_time = time_current_get();
 	if (philosopher_id == 1)
 		*(pthread_mutex_t *) &philosopher->right_fork = \
 			simulation->forks[settings->amount_of_philosophers - 1];
@@ -54,10 +54,8 @@ void	*philosopher_routine(struct s_philosopher *philosopher)
 		free(philosopher);
 		return (NULL);
 	}
-	pthread_mutex_lock(&philosopher->simulation_states->print_signal.mutex);
-	printf("Philosopher %-3d is alive\n", philosopher->id);
-	simulation_signal_send(&philosopher->simulation_states->print_signal, \
-		SIMULATION_SUCCESS);
+	
+	philosopher_action_print(philosopher, "has taken a fork");
 	// while (1)
 	// {
 	// 	philosopher_think(philosopher);
