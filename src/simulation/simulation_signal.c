@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:11:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/12 22:43:38 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/17 21:18:07 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,26 @@ struct s_simulation_signal *signal)
 	return (SIMULATION_SUCCESS);
 }
 
-t_simulation_status	simulation_signal_send(\
+t_simulation_status	simulation_signal_respond(\
 struct s_simulation_signal *signal, t_simulation_status status)
 {
 	signal->status = status;
 	if (pthread_mutex_unlock(&signal->mutex))
 		return (SIMULATION_FAILURE);
 	return (SIMULATION_SUCCESS);
+}
+
+t_simulation_status	simulation_signal_status_get(\
+struct s_simulation_signal *signal)
+{
+	t_simulation_status	status;
+
+	if (pthread_mutex_lock(&signal->mutex))
+		return (SIMULATION_FAILURE);
+	status = signal->status;
+	if (pthread_mutex_unlock(&signal->mutex))
+		return (SIMULATION_FAILURE);
+	return (status);
 }
 
 t_simulation_status	simulation_signal_free(\

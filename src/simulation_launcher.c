@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 21:05:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/12 16:40:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/17 22:24:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,64 @@ const struct s_simulation_settings *settings, unsigned int philosopher_id)
 	return (SIMULATION_SUCCESS);
 }
 
+static t_simulation_status	simulation_spawn_reaper(\
+struct s_simulation *simulation, \
+const struct s_simulation_settings *settings)
+{
+	struct s_reaper	*reaper;
+
+	reaper = malloc(sizeof(struct s_reaper));
+	if (!reaper)
+		return (SIMULATION_FAILURE);
+	reaper_init(reaper, simulation, settings);
+	if (pthread_create(&simulation->reaper, NULL, \
+		(void *(*)(void *)) reaper_routine, (void *) reaper))
+	{
+		free(reaper);
+		return (SIMULATION_FAILURE);
+	}
+	return (SIMULATION_SUCCESS);
+}
+
+static void	simulation_start_time_set(struct s_simulation *simulation, \
+const struct s_simulation_settings *settings)
+{
+	t_philosophers_amount	i;
+
+	simulation->states.start_time = time_current_get();
+	i = 0;
+	while (i < settings->amount_of_philosophers)
+		simulation->philosophers_last_meal_times[i++] = \
+			simulation->states.start_time;
+}
+
 t_philosophers_amount	simulation_start(struct s_simulation *simulation, \
 const struct s_simulation_settings *settings)
 {
-	t_philosophers_amount	philosopher_id;
+	t_philosophers_amount	i;
 
-	philosopher_id = 1;
 	simulation_signal_wait(&simulation->states.start_signal);
-	while (philosopher_id <= settings->amount_of_philosophers)
+	if (simulation_spawn_reaper(simulation, settings))
 	{
-		if (simulation_spawn_philosopher(simulation, settings, \
-			philosopher_id))
-		{
-			simulation->states.start_time = time_current_get();
-			simulation_signal_send(&simulation->states.start_signal, \
-				SIMULATION_FAILURE);
-			return (philosopher_id);
-		}
-		philosopher_id++;
+		simulation_signal_respond(&simulation->states.start_signal, \
+			SIMULATION_FAILURE);
+		return (0);
 	}
-	simulation->states.start_time = time_current_get();
-	simulation_signal_send(&simulation->states.start_signal, \
+	i = 1;
+	while (i <= settings->amount_of_philosophers)
+	{
+		if (simulation_spawn_philosopher(simulation, settings, i))
+		{
+			simulation_signal_respond(&simulation->states.start_signal, \
+				SIMULATION_FAILURE);
+			return (i);
+		}
+		i++;
+	}
+	simulation_start_time_set(simulation, settings);
+	simulation_signal_respond(&simulation->states.start_signal, \
 		SIMULATION_SUCCESS);
-	return (philosopher_id);
+	return (i);
 }
 
 int	philosophers_amount_meet_expectation(\

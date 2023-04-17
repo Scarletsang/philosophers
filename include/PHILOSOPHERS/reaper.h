@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.h                                      :+:      :+:    :+:   */
+/*   reaper.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 21:07:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/17 21:59:04 by htsang           ###   ########.fr       */
+/*   Created: 2023/04/17 17:29:29 by htsang            #+#    #+#             */
+/*   Updated: 2023/04/17 21:31:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHER_H
-# define PHILOSOPHER_H
+#ifndef REAPER_H
+# define REAPER_H
 
 # include "PHILOSOPHERS/time.h"
 # include "PHILOSOPHERS/simulation.h"
 # include "PHILOSOPHERS/simulation/simulation_settings.h"
-# include <pthread.h>
 
-struct s_philosopher
+struct s_reaper
 {
-	const unsigned int					id;
-	unsigned int						meals_eaten;
-	t_milliseconds						*last_meal_time;
-	pthread_mutex_t						*left_fork;
-	pthread_mutex_t						*right_fork;
+	t_milliseconds						*philosophers_last_meal_times;
 	struct s_simulation_states			*simulation_states;
 	const struct s_simulation_settings	*simulation_settings;
 };
 
-void	philosopher_init(struct s_philosopher *philosopher, \
-struct s_simulation *simulation, const struct s_simulation_settings *settings, \
-unsigned int philosopher_id);
+void	reaper_init(struct s_reaper *reaper, struct s_simulation *simulation, \
+const struct s_simulation_settings *settings);
 
-void	*philosopher_routine(struct s_philosopher *philosopher);
+void	*reaper_routine(struct s_reaper *reaper);
 
 #endif

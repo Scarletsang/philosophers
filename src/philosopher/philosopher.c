@@ -6,11 +6,12 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:08:26 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/12 23:06:55 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/17 23:32:18 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PHILOSOPHERS/philosopher.h"
+#include "PHILOSOPHERS/philosopher/philosopher_action.h"
 #include <stdio.h>
 
 void	philosopher_init(struct s_philosopher *philosopher, \
@@ -19,50 +20,34 @@ unsigned int philosopher_id)
 {
 	*(unsigned int *) &philosopher->id = philosopher_id;
 	philosopher->meals_eaten = 0;
-	philosopher->last_meal_time = time_current_get();
+	philosopher->last_meal_time = simulation->philosophers_last_meal_times + \
+		philosopher_id - 1;
 	if (philosopher_id == 1)
-		*(pthread_mutex_t *) &philosopher->right_fork = \
-			simulation->forks[settings->amount_of_philosophers - 1];
+		philosopher->left_fork = simulation->forks + \
+			settings->amount_of_philosophers - 1;
 	else
-		*(pthread_mutex_t *) &philosopher->right_fork = \
-			simulation->forks[philosopher_id - 1];
-	*(pthread_mutex_t *) &philosopher->left_fork = \
-		simulation->forks[philosopher_id];
+		philosopher->left_fork = simulation->forks + philosopher_id - 2;
+	philosopher->right_fork = simulation->forks + philosopher_id - 1;
 	philosopher->simulation_states = &simulation->states;
 	philosopher->simulation_settings = settings;
 }
 
-static t_simulation_status	philosopher_wait_for_start_signal(\
-const struct s_philosopher *philosopher)
-{
-	pthread_mutex_lock(&philosopher->simulation_states->start_signal.mutex);
-	if (philosopher->simulation_states->start_signal.status == \
-		SIMULATION_FAILURE)
-	{
-		pthread_mutex_unlock(\
-			&philosopher->simulation_states->start_signal.mutex);
-		return (SIMULATION_FAILURE);
-	}
-	pthread_mutex_unlock(&philosopher->simulation_states->start_signal.mutex);
-	return (SIMULATION_SUCCESS);
-}
-
 void	*philosopher_routine(struct s_philosopher *philosopher)
 {
-	if (philosopher_wait_for_start_signal(philosopher))
-	{
-		free(philosopher);
-		return (NULL);
-	}
-	
+	if (simulation_signal_status_get(\
+		&philosopher->simulation_states->start_signal))
+		return (free(philosopher), NULL);
 	philosopher_action_print(philosopher, "has taken a fork");
-	// while (1)
-	// {
+	while (1)
+	{
+		if (simulation_signal_status_get(\
+			&philosopher->simulation_states->kill_signal))
+			return (free(philosopher), NULL);
 	// 	philosopher_think(philosopher);
 	// 	philosopher_take_forks(philosopher);
 	// 	philosopher_eat(philosopher);
 	// 	philosopher_put_forks(philosopher);
-	// }
+	}
 	free(philosopher);
 	return (NULL);
 }
