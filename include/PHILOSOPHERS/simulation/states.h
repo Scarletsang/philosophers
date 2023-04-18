@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation_states.h                                :+:      :+:    :+:   */
+/*   states.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:15:36 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/17 21:20:20 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:25:37 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIMULATION_STATES_H
-# define SIMULATION_STATES_H
+#ifndef STATES_H
+# define STATES_H
 
 # include "PHILOSOPHERS/time.h"
 # include <pthread.h>

@@ -18,20 +18,22 @@ endif
 
 SIMULATION_SRC:= \
 	simulation/simulation.c \
-	simulation/simulation_settings.c \
-	simulation/simulation_signal.c \
-	simulation/simulation_states.c
+	simulation/settings.c \
+	simulation/signal.c \
+	simulation/states.c
 REAPER_SRC:= \
 	reaper/reaper.c
 PHILOSOPHER_SRC:= \
 	philosopher/philosopher.c \
-	philosopher/philosopher_action.c \
+	philosopher/action.c \
 	philosopher/printer.c
+SIMULATION_LAUNCHER_SRC:= \
+	simulation_launcher/simulation_launcher.c \
+	simulation_launcher/simulation_spawner.c
 SRC:= \
 	time.c \
-	simulation_launcher.c \
 	main.c
-OBJS:=${addprefix src/,${SRC:.c=.o} ${REAPER_SRC:.c=.o} ${PHILOSOPHER_SRC:.c=.o} ${SIMULATION_SRC:.c=.o}}
+OBJS:=${addprefix src/,${SIMULATION_SRC:.c=.o} ${REAPER_SRC:.c=.o} ${PHILOSOPHER_SRC:.c=.o} ${SIMULATION_LAUNCHER_SRC:.c=.o} ${SRC:.c=.o}}
 INCLUDE:= \
 	include
 

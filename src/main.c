@@ -6,24 +6,22 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/17 23:25:56 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:37:37 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PHILOSOPHERS/simulation.h"
-#include "PHILOSOPHERS/simulation/simulation_settings.h"
+#include "PHILOSOPHERS/simulation/settings.h"
 #include "PHILOSOPHERS/simulation_launcher.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 void	bury_dead_philosopher(struct s_simulation *simulation, \
 unsigned int *dead_philosopher_id)
 {
 	if (dead_philosopher_id)
 	{
-		printf("%-5llu %-3u died\n", \
-			time_since_simulation_get(simulation->states.start_time), \
-			*dead_philosopher_id);
+		simulation_philosopher_status_print(\
+			&simulation->states, *dead_philosopher_id, "died");
 		free(dead_philosopher_id);
 	}
 }

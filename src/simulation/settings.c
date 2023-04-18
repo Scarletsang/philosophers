@@ -6,11 +6,11 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 19:21:42 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/12 00:45:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:27:10 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PHILOSOPHERS/simulation/simulation_settings.h"
+#include "PHILOSOPHERS/simulation/settings.h"
 #include <limits.h>
 
 static inline int	is_digit(char c)

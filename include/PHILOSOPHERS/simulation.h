@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 20:20:19 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/17 23:30:58 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:51:57 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SIMULATION_H
 
 # include "PHILOSOPHERS/time.h"
-# include "PHILOSOPHERS/simulation/simulation_states.h"
+# include "PHILOSOPHERS/simulation/states.h"
 # include <pthread.h>
 # include <stdlib.h>
 

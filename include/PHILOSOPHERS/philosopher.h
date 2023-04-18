@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:07:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/17 21:59:04 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:53:48 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 # define PHILOSOPHER_H
 
 # include "PHILOSOPHERS/time.h"
-# include "PHILOSOPHERS/simulation.h"
-# include "PHILOSOPHERS/simulation/simulation_settings.h"
+# include "PHILOSOPHERS/simulation/states.h"
+# include "PHILOSOPHERS/simulation/settings.h"
 # include <pthread.h>
 
 struct s_philosopher
 {
 	const unsigned int					id;
 	unsigned int						meals_eaten;
+	t_simulation_status					(*action)(struct s_philosopher *);
 	t_milliseconds						*last_meal_time;
 	pthread_mutex_t						*left_fork;
 	pthread_mutex_t						*right_fork;
@@ -29,10 +30,20 @@ struct s_philosopher
 	const struct s_simulation_settings	*simulation_settings;
 };
 
-void	philosopher_init(struct s_philosopher *philosopher, \
-struct s_simulation *simulation, const struct s_simulation_settings *settings, \
-unsigned int philosopher_id);
+typedef t_simulation_status	(*t_philosopher_action)(\
+struct s_philosopher *philosopher);
 
 void	*philosopher_routine(struct s_philosopher *philosopher);
+
+////////////////////////////////////////////
+////////////      printer      /////////////
+////////////////////////////////////////////
+
+void	philosopher_action_print(const struct s_philosopher *philosopher, \
+	const char *action);
+
+void	simulation_philosopher_status_print(\
+struct s_simulation_states *states, unsigned int philosopher_id, \
+const char *action);
 
 #endif

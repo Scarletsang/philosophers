@@ -6,11 +6,11 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:38:24 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/12 16:11:26 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:27:20 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PHILOSOPHERS/simulation/simulation_states.h"
+#include "PHILOSOPHERS/simulation/states.h"
 
 t_simulation_status	simulation_states_init(struct s_simulation_states *states)
 {

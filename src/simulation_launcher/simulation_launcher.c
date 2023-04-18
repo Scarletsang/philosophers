@@ -6,49 +6,11 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 21:05:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/17 22:24:49 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:15:36 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PHILOSOPHERS/simulation_launcher.h"
-
-static t_simulation_status	simulation_spawn_philosopher(\
-struct s_simulation *simulation, \
-const struct s_simulation_settings *settings, unsigned int philosopher_id)
-{
-	struct s_philosopher	*philosopher;
-
-	philosopher = malloc(sizeof(struct s_philosopher));
-	if (!philosopher)
-		return (SIMULATION_FAILURE);
-	philosopher_init(philosopher, simulation, settings, philosopher_id);
-	if (pthread_create(&simulation->philosophers[philosopher_id - 1], NULL, \
-		(void *(*)(void *)) philosopher_routine, (void *) philosopher))
-	{
-		free(philosopher);
-		return (SIMULATION_FAILURE);
-	}
-	return (SIMULATION_SUCCESS);
-}
-
-static t_simulation_status	simulation_spawn_reaper(\
-struct s_simulation *simulation, \
-const struct s_simulation_settings *settings)
-{
-	struct s_reaper	*reaper;
-
-	reaper = malloc(sizeof(struct s_reaper));
-	if (!reaper)
-		return (SIMULATION_FAILURE);
-	reaper_init(reaper, simulation, settings);
-	if (pthread_create(&simulation->reaper, NULL, \
-		(void *(*)(void *)) reaper_routine, (void *) reaper))
-	{
-		free(reaper);
-		return (SIMULATION_FAILURE);
-	}
-	return (SIMULATION_SUCCESS);
-}
 
 static void	simulation_start_time_set(struct s_simulation *simulation, \
 const struct s_simulation_settings *settings)

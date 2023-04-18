@@ -6,23 +6,13 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:30:38 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/17 23:30:10 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:23:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PHILOSOPHERS/reaper.h"
 #include <pthread.h>
 #include <unistd.h>
-
-void	reaper_init(struct s_reaper *reaper, struct s_simulation *simulation, \
-const struct s_simulation_settings *settings)
-{
-	reaper->philosophers_last_meal_times = \
-		simulation->philosophers_last_meal_times;
-	reaper->simulation_states = &simulation->states;
-	reaper->simulation_settings = settings;
-	reaper->simulation_states->kill_signal.status = SIMULATION_FAILURE;
-}
 
 static unsigned int	*reaper_attemps_killing(struct s_reaper *reaper)
 {

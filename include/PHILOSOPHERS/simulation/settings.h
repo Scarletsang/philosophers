@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation_settings.h                              :+:      :+:    :+:   */
+/*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/11 23:22:46 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:28:58 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIMULATION_SETTINGS_H
-# define SIMULATION_SETTINGS_H
+#ifndef SETTINGS_H
+# define SETTINGS_H
 
 # include "PHILOSOPHERS/time.h"
 

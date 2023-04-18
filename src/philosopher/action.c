@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher_action.c                               :+:      :+:    :+:   */
+/*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:35:13 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/17 21:58:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:54:32 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PHILOSOPHERS/philosopher/philosopher_action.h"
-#include <unistd.h>
+#include "PHILOSOPHERS/philosopher.h"
+#include "PHILOSOPHERS/philosopher/action.h"
 
-t_simulation_status	philosopher_action_take_forks(\
-struct s_philosopher *philosopher)
+t_simulation_status	philosopher_take_forks(struct s_philosopher *philosopher)
 {
 	if (philosopher->id % 2 == 1)
 	{
@@ -30,3 +29,23 @@ struct s_philosopher *philosopher)
 	philosopher_action_print(philosopher, "has taken a fork");
 	return (SIMULATION_SUCCESS);
 }
+
+// t_simulation_status	philosopher_eat(struct s_philosopher *philosopher)
+// {
+
+// }
+
+// t_simulation_status	philosopher_think(struct s_philosopher *philosopher)
+// {
+
+// }
+
+// t_simulation_status	philosopher_put_forks(struct s_philosopher *philosopher)
+// {
+
+// }
+
+// t_simulation_status	philosopher_sleep(struct s_philosopher *philosopher)
+// {
+
+// }
