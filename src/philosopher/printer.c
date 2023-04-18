@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:42:14 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 16:26:30 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 22:39:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	simulation_philosopher_status_print(\
 struct s_simulation_states *states, unsigned int philosopher_id, \
 const char *action)
 {
-	printf("%-6llu %-4u %s\n", \
+	printf("%-6llu %4u %s\n", \
 		time_since_simulation_get(states->start_time), \
 		philosopher_id, action);
 }

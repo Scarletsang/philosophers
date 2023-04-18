@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 16:15:27 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 16:23:19 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 22:02:31 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ unsigned int philosopher_id)
 	philosopher->right_fork = simulation->forks + philosopher_id - 1;
 	philosopher->simulation_states = &simulation->states;
 	philosopher->simulation_settings = settings;
+	philosopher->action = &philosopher_take_forks;
 }
 
 t_simulation_status	simulation_spawn_philosopher(\
@@ -49,14 +50,14 @@ const struct s_simulation_settings *settings, unsigned int philosopher_id)
 	return (SIMULATION_SUCCESS);
 }
 
-static void	reaper_init(struct s_reaper *reaper, struct s_simulation *simulation, \
+static void	reaper_init(struct s_reaper *reaper, \
+struct s_simulation *simulation, \
 const struct s_simulation_settings *settings)
 {
 	reaper->philosophers_last_meal_times = \
 		simulation->philosophers_last_meal_times;
 	reaper->simulation_states = &simulation->states;
 	reaper->simulation_settings = settings;
-	reaper->simulation_states->kill_signal.status = SIMULATION_FAILURE;
 }
 
 t_simulation_status	simulation_spawn_reaper(\

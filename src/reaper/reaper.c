@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:30:38 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 16:23:09 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/18 22:07:40 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static unsigned int	*reaper_attemps_killing(struct s_reaper *reaper)
 		{
 			simulation_signal_wait(&reaper->simulation_states->kill_signal);
 			simulation_signal_respond(&reaper->simulation_states->kill_signal, \
-				SIMULATION_SUCCESS);
+				SIMULATION_FAILURE);
 			dead_philosopher_id = malloc(sizeof(unsigned int));
 			*dead_philosopher_id = philosopher_id + 1;
 			return (dead_philosopher_id);
