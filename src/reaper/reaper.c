@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:30:38 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/19 17:19:23 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 19:14:40 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ struct s_reaper *reaper)
 	while (philosopher_id < \
 		reaper->simulation_settings->amount_of_philosophers)
 	{
-		if (time_since(\
+		if ((reaper->philosophers_last_meal_times[philosopher_id] != 0) && \
+			(time_since(\
 				reaper->philosophers_last_meal_times[philosopher_id]) >= \
-				reaper->simulation_settings->time_to_die)
+				reaper->simulation_settings->time_to_die))
 		{
 			simulation_signal_wait(&reaper->simulation_states->kill_signal);
 			simulation_signal_respond(&reaper->simulation_states->kill_signal, \
