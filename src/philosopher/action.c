@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:35:13 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 22:29:46 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 14:00:58 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_simulation_status	philosopher_eat(struct s_philosopher *philosopher)
 {
 	philosopher->meals_eaten++;
 	philosopher_action_print(philosopher, "is eating");
-	*philosopher->last_meal_time = time_current_get();
+	*philosopher->last_meal_time = time_now();
 	time_sleep(philosopher->simulation_settings->time_to_eat);
 	pthread_mutex_unlock(philosopher->left_fork);
 	pthread_mutex_unlock(philosopher->right_fork);
@@ -55,8 +55,15 @@ t_simulation_status	philosopher_sleep(struct s_philosopher *philosopher)
 
 t_simulation_status	philosopher_think(struct s_philosopher *philosopher)
 {
+	t_milliseconds	time_since_last_meal;
+
 	philosopher_action_print(philosopher, "is thinking");
+	time_since_last_meal = time_since(*philosopher->last_meal_time);
+	if (time_since_last_meal < philosopher->simulation_settings->time_to_die)
+	{
+		time_sleep((philosopher->simulation_settings->time_to_die - \
+				time_since_last_meal) * 7 / 10);
+	}
 	philosopher->action = &philosopher_take_forks;
 	return (SIMULATION_SUCCESS);
 }
-

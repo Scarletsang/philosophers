@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:07:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/18 16:53:48 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 13:46:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	*philosopher_routine(struct s_philosopher *philosopher);
 void	philosopher_action_print(const struct s_philosopher *philosopher, \
 	const char *action);
 
-void	simulation_philosopher_status_print(\
-struct s_simulation_states *states, unsigned int philosopher_id, \
-const char *action);
+void	simulation_philosopher_status_print(t_milliseconds time, \
+unsigned int philosopher_id, const char *action);
 
 #endif

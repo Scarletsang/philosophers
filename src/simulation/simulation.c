@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 20:50:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/18 16:51:38 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 13:42:32 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ unsigned int amount_of_philosophers)
 	return (SIMULATION_SUCCESS);
 }
 
-unsigned int	*simulation_wait_for_reaper(\
+struct s_reaper_report	*simulation_wait_for_reaper(\
 struct s_simulation *simulation)
 {
-	unsigned int		*philosopher_id;
+	struct s_reaper_report	*report;
 
-	philosopher_id = NULL;
-	pthread_join(simulation->reaper, (void **) &philosopher_id);
-	return (philosopher_id);
+	report = NULL;
+	pthread_join(simulation->reaper, (void **) &report);
+	return (report);
 }
 
 t_simulation_status	simulation_wait_for_philosophers(\

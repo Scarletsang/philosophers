@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 21:05:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 16:15:36 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 13:54:21 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ const struct s_simulation_settings *settings)
 {
 	t_philosophers_amount	i;
 
-	simulation->states.start_time = time_current_get();
+	simulation->states.start_time = time_now();
 	i = 0;
 	while (i < settings->amount_of_philosophers)
 		simulation->philosophers_last_meal_times[i++] = \
