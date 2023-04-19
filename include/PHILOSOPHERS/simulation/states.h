@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:15:36 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 16:25:37 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 16:31:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef enum e_simulation_status
 struct s_simulation_signal
 {
 	pthread_mutex_t		mutex;
-	t_simulation_status	status;
+	unsigned int		status;
 };
 
 struct s_simulation_states

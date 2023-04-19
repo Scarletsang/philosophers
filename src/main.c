@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/19 13:47:40 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 17:09:57 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,33 @@ void	bury_dead_philosopher(struct s_reaper_report *reaper_report)
 	}
 }
 
+void	*lonely_philosopher_routine(struct s_lonely_simulation *simulation)
+{
+	pthread_mutex_lock(&simulation->fork);
+	simulation_philosopher_status_print(\
+		time_since(simulation->start_time), 1, "has taken a fork");
+	pthread_mutex_unlock(&simulation->fork);
+	time_sleep(simulation->time_to_die);
+	simulation_philosopher_status_print(\
+		time_since(simulation->start_time), 1, "died");
+	return (NULL);
+}
+
+int lonely_simulation(t_milliseconds time_to_die)
+{
+	struct s_lonely_simulation	lonely_simulation;
+
+	lonely_simulation.time_to_die = time_to_die;
+	lonely_simulation.start_time = time_now();
+	pthread_mutex_init(&lonely_simulation.fork, NULL);
+	pthread_create(&lonely_simulation.philosopher, NULL, \
+		(void *(*)(void *)) lonely_philosopher_routine, \
+		(void *) &lonely_simulation);
+	pthread_join(lonely_simulation.philosopher, NULL);
+	pthread_mutex_destroy(&lonely_simulation.fork);
+	return (EXIT_SUCCESS);
+}
+
 int	main(int argc, const char **argv)
 {
 	const struct s_simulation_settings	settings;
@@ -35,6 +62,8 @@ int	main(int argc, const char **argv)
 	if (simulation_settings_init((struct s_simulation_settings *) &settings, \
 		argc, argv))
 		return (EXIT_FAILURE);
+	if (settings.amount_of_philosophers == 1)
+		return (lonely_simulation(settings.time_to_die));
 	if (simulation_init(&simulation, settings.amount_of_philosophers))
 		return (EXIT_FAILURE);
 	philosophers_amount = simulation_start(&simulation, &settings);

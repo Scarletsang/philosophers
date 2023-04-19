@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 19:21:42 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/18 21:32:36 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 16:43:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,15 @@ struct s_simulation_settings *settings, int argc, const char **argv)
 		number_parse(&settings->time_to_eat, argv[3], as_milliseconds) || \
 		number_parse(&settings->time_to_sleep, argv[4], as_milliseconds))
 		return (PARSE_FAILURE);
+	if (settings->amount_of_philosophers == 0)
+		return (PARSE_FAILURE);
 	if (argc == 6)
 	{
-		if (number_parse(&settings->amount_of_times_each_philosopher_must_eat, \
+		if (number_parse(&settings->amount_of_meals_must_eat, \
 			argv[5], as_amount))
 			return (PARSE_FAILURE);
 	}
 	else
-		settings->amount_of_times_each_philosopher_must_eat = UINT_MAX;
+		settings->amount_of_meals_must_eat = UINT_MAX;
 	return (PARSE_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:08:26 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/19 13:55:25 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 16:37:12 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ void	*philosopher_routine(struct s_philosopher *philosopher)
 		time_sleep(philosopher->simulation_settings->time_to_eat / 2);
 	while (1)
 	{
-		philosopher->action(philosopher);
+		if (philosopher->action(philosopher))
+		{
+			philosopher->last_meal_time = 0;
+			return (philosopher_die(philosopher));
+		}
 		if (simulation_signal_status_get(\
 				&philosopher->simulation_states->kill_signal))
 			return (philosopher_die(philosopher));
