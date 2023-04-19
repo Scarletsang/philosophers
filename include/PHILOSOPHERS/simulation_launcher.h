@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:59:04 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 19:48:38 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 19:51:30 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,22 @@ const struct s_simulation_settings *settings);
 int						philosophers_amount_meet_expectation(\
 t_philosophers_amount philosopher_amount, \
 const struct s_simulation_settings *settings);
+
+//////////////////////////////////////////////
+/////////    lonely simulation    ////////////
+//////////////////////////////////////////////
+
+struct s_lonely_simulation
+{
+	pthread_t		philosopher;
+	pthread_mutex_t	fork;
+	t_milliseconds	start_time;
+	t_milliseconds	time_to_die;
+};
+
+void					*lonely_philosopher_routine(\
+struct s_lonely_simulation *simulation);
+
+t_simulation_status		lonely_simulation_start(t_milliseconds time_to_die);
 
 #endif

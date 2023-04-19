@@ -29,7 +29,8 @@ PHILOSOPHER_SRC:= \
 	philosopher/printer.c
 SIMULATION_LAUNCHER_SRC:= \
 	simulation_launcher/simulation_launcher.c \
-	simulation_launcher/simulation_spawner.c
+	simulation_launcher/simulation_spawner.c \
+	simulation_launcher/simulation_loner.c
 SRC:= \
 	time.c \
 	main.c

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 20:20:19 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/19 17:08:06 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 19:49:30 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@ struct s_simulation
 	pthread_t					reaper;
 	pthread_mutex_t				*forks;
 	struct s_simulation_states	states;
-};
-
-struct s_lonely_simulation
-{
-	pthread_t		philosopher;
-	pthread_mutex_t	fork;
-	t_milliseconds	start_time;
-	t_milliseconds	time_to_die;
 };
 
 ///////////////////////////////////////////
