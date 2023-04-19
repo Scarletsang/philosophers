@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:35:13 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/19 17:30:54 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 19:41:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_simulation_status	philosopher_think(struct s_philosopher *philosopher)
 	if (time_since_last_meal < philosopher->simulation_settings->time_to_die)
 	{
 		time_sleep((philosopher->simulation_settings->time_to_die - \
-				time_since_last_meal) / 6);
+				time_since_last_meal) * 7 / 10);
 	}
 	if (philosopher->meals_eaten == \
 		philosopher->simulation_settings->amount_of_meals_must_eat)

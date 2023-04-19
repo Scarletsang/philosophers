@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:56:38 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/19 13:54:22 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/19 19:39:42 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,9 @@ t_milliseconds	time_since(t_milliseconds start_time)
 
 void	time_sleep(t_milliseconds duration)
 {
-	usleep(duration * 1000);
+	t_milliseconds	start_time;
+
+	start_time = time_now();
+	while (time_since(start_time) <= duration)
+		usleep(100);
 }
