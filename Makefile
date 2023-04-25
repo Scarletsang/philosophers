@@ -6,7 +6,7 @@ NAME:=philo
 
 CC:=cc
 CFLAGS= -Wall -Wextra -Werror -pthread
-LDFLAGS= -pthread
+LDFLAGS= -lpthread
 ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
 	LDFLAGS+= -g3 -fsanitize=address
@@ -34,7 +34,9 @@ SIMULATION_LAUNCHER_SRC:= \
 SRC:= \
 	time.c \
 	main.c
-OBJS:=${addprefix src/,${SIMULATION_SRC:.c=.o} ${REAPER_SRC:.c=.o} ${PHILOSOPHER_SRC:.c=.o} ${SIMULATION_LAUNCHER_SRC:.c=.o} ${SRC:.c=.o}}
+OBJS_DIR:=obj
+SRCS_DIR:=src
+OBJS:=$(addprefix $(OBJS_DIR)/,$(subst /,\#,$(SIMULATION_SRC:.c=.o) $(REAPER_SRC:.c=.o) $(PHILOSOPHER_SRC:.c=.o) $(SIMULATION_LAUNCHER_SRC:.c=.o) $(SRC:.c=.o)))
 INCLUDE:= \
 	include
 
@@ -43,13 +45,17 @@ INCLUDE:= \
 #################################
 
 all:
-	@${MAKE} ${NAME} -j
+	@$(MAKE) $(NAME) -j
 
-${NAME}: ${OBJS}
-	@${CC} ${OBJS} -o ${NAME} ${LDFLAGS} && echo "Compilation of ${NAME} successful"
+$(NAME): $(OBJS_DIR) $(OBJS)
+	@$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) && echo "Compilation of $(NAME) successful"
 
-%.o: %.c
-	@${CC} ${CFLAGS} ${addprefix -iquote ,${INCLUDE}} -c $< -o $@
+.SECONDEXPANSION:
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/$$(subst \#,/,$$*).c
+	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE)) -c $< -o $@
+
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
 
 bonus: re
 
@@ -58,10 +64,11 @@ bonus: re
 ###############################
 
 clean: 
-	@rm -f ${OBJS}
+	@rm -f $(OBJS)
 
 fclean: clean
-	@rm -f ${NAME}
+	@rm -rf $(OBJS_DIR)
+	@rm -f $(NAME)
 
 re: fclean all
 
