@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:59:04 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/19 19:51:30 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/24 16:10:25 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include "PHILOSOPHERS/simulation/settings.h"
 # include "PHILOSOPHERS/simulation/states.h"
 # include "PHILOSOPHERS/philosopher.h"
-# include "PHILOSOPHERS/philosopher/action.h"
 # include "PHILOSOPHERS/reaper.h"
 # include <pthread.h>
 # include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 16:15:27 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/18 22:02:31 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/24 16:10:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ unsigned int philosopher_id)
 	philosopher->right_fork = simulation->forks + philosopher_id - 1;
 	philosopher->simulation_states = &simulation->states;
 	philosopher->simulation_settings = settings;
-	philosopher->action = &philosopher_take_forks;
 }
 
 t_simulation_status	simulation_spawn_philosopher(\

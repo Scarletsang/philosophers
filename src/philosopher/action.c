@@ -6,13 +6,12 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:35:13 by htsang            #+#    #+#             */
-/*   Updated: 2023/04/19 19:41:49 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/25 17:51:52 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PHILOSOPHERS/philosopher.h"
 #include "PHILOSOPHERS/philosopher/action.h"
-#include <unistd.h>
 
 t_simulation_status	philosopher_take_forks(struct s_philosopher *philosopher)
 {

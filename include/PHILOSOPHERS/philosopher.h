@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:07:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:56 by htsang           ###   ########.fr       */
+/*   Updated: 2023/04/24 16:07:14 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ struct s_philosopher
 	struct s_simulation_states			*simulation_states;
 	const struct s_simulation_settings	*simulation_settings;
 };
-
-typedef t_simulation_status	(*t_philosopher_action)(\
-struct s_philosopher *philosopher);
 
 void	*philosopher_routine(struct s_philosopher *philosopher);
 
